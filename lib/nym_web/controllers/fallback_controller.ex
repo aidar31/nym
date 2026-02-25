@@ -8,6 +8,13 @@ defmodule NymWeb.FallbackController do
     |> render(:"404")
   end
 
+  def call(conn, {:error, status, message}) when is_atom(status) do
+      conn
+      |> put_status(status)
+      |> put_view(json: NymWeb.ErrorJSON)
+      |> render(:error, message: message, code: status)
+  end
+
   def call(conn, {:error, %Ecto.Changeset{} = changeset}) do
     conn
     |> put_status(:unprocessable_entity)

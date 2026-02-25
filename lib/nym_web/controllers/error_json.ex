@@ -18,4 +18,13 @@ defmodule NymWeb.ErrorJSON do
   def render(template, _assigns) do
     %{errors: %{detail: Phoenix.Controller.status_message_from_template(template)}}
   end
+
+  def error(%{message: message, code: code}) do
+    %{
+      errors: %{
+        detail: message,
+        code: code
+      }
+    }
+  end
 end
