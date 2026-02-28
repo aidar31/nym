@@ -22,6 +22,10 @@ end
 
 config :nym, NymWeb.Endpoint, http: [port: String.to_integer(System.get_env("PORT", "4000"))]
 
+kratos_url = System.get_env("KRATOS_PUBLIC_URL") || "http://localhost:4433"
+
+config :nym, :kratos_public_url, kratos_url
+
 if config_env() == :prod do
   database_url =
     System.get_env("DATABASE_URL") ||

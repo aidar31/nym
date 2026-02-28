@@ -15,6 +15,10 @@ defmodule NymWeb.Router do
     plug OpenApiSpex.Plug.PutApiSpec, module: NymWeb.ApiSpec
   end
 
+  pipeline :auth do
+    plug NymWeb.Plugs.Auth
+  end
+
   scope "/api" do
     pipe_through :api
 
@@ -27,6 +31,10 @@ defmodule NymWeb.Router do
     get "/ping", PingController, :index
 
     scope "/v1", V1 do
+      scope "/users" do
+        pipe_through :auth
+        get "/me", UserController, :me
+      end
     end
   end
 
