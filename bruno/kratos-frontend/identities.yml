@@ -5,25 +5,17 @@ info:
 
 http:
   method: POST
-  url: http://localhost:4433/self-service/registration?flow_id=01dd5844-b117-4708-ad6b-daf922abbfb5
+  url: http://127.0.0.1:4433/self-service/login?flow=8a68a24a-e143-4387-8578-75cf9ff8026a"
   params:
-    - name: flow_id
-      value: 01dd5844-b117-4708-ad6b-daf922abbfb5
+    - name: flow
+      value: 8a68a24a-e143-4387-8578-75cf9ff8026a"
       type: query
   body:
     type: json
     data: |-
       {
-        "method": "password",
-        "csrf_token": "ТВОЙ_ТОКЕН_ИЗ_GET_ЗАПРОСА",
-        "password": "aidarisenov31",
-        "traits": {
-          "email": "user@example.com",
-          "name": {
-            "first": "Имя",
-            "last": "Фамилия"
-          }
-        }
+        "email": "user@example.com",
+        "password": ""
       }
   auth: inherit
 

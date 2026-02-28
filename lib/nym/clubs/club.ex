@@ -7,7 +7,6 @@ defmodule Nym.Clubs.Club do
 
   schema "clubs" do
     field :name, :string
-    field :slug, :string
     field :description, :string
     field :is_private, :boolean, default: false
 
