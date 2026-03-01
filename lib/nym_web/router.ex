@@ -35,6 +35,14 @@ defmodule NymWeb.Router do
         pipe_through :auth
         get "/me", UserController, :me
       end
+
+      scope "/clubs" do
+        pipe_through [:auth, NymWeb.Plugs.FetchMember]
+        get "/", ClubController, :index
+        post "/", ClubController, :create
+        get "/:id", ClubController, :show
+        patch "/:id", ClubController, :update
+      end
     end
   end
 

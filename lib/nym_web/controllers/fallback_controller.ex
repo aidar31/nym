@@ -8,6 +8,20 @@ defmodule NymWeb.FallbackController do
     |> render(:"404")
   end
 
+  def call(conn, {:error, :forbidden}) do
+    conn
+    |> put_status(:forbidden)
+    |> put_view(json: NymWeb.ErrorJSON)
+    |> render(:"403")
+  end
+
+  def call(conn, {:error, _step, %Ecto.Changeset{} = changeset, _changes}) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> put_view(json: NymWeb.ChangesetJSON)
+    |> render(:error, changeset: changeset)
+  end
+
   def call(conn, {:error, %Ecto.Changeset{} = changeset}) do
     conn
     |> put_status(:unprocessable_entity)

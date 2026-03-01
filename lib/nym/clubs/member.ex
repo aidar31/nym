@@ -14,10 +14,10 @@ defmodule Nym.Clubs.Member do
     belongs_to :club, Nym.Clubs.Club
     belongs_to :user, Nym.Accounts.User
 
-    has_many :posts, Nym.Posts.Post, foreign_key: :author_id
-    has_many :permissions, Nym.Clubs.Permission
+    # has_many :posts, Nym.Posts.Post, foreign_key: :author_id
+    # has_many :permissions, Nym.Clubs.Permission
 
-    timestamps(type: :utc_datetime, updated_at: false)
+    timestamps(type: :utc_datetime)
   end
 
   @doc """
@@ -30,4 +30,14 @@ defmodule Nym.Clubs.Member do
     |> validate_inclusion(:role, ["owner", "moderator", "member"])
     |> unique_constraint([:club_id, :user_id], name: :club_members_club_id_user_id_index)
   end
+
+  def owner_changeset(member, attrs) do
+    member
+    |> cast(attrs, [:club_id, :user_id, :display_name])
+    |> put_change(:role, "owner")
+    |> put_change(:joined_at, now())
+    |> validate_required([:club_id, :user_id])
+  end
+
+  defp now, do: DateTime.utc_now() |> DateTime.truncate(:second)
 end

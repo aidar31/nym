@@ -18,8 +18,14 @@ defmodule Nym.Clubs.Club do
 
   def changeset(club, attrs) do
     club
-    |> cast(attrs, [:name, :slug, :description, :is_private, :owner_id])
-    |> validate_required([:name, :slug, :owner_id])
-    |> unique_constraint(:slug)
+    |> cast(attrs, [:name, :description, :is_private, :owner_id])
+    |> validate_required([:name, :owner_id])
+  end
+
+  def update_changeset(club, attrs) do
+    club
+    |> cast(attrs, [:name, :description, :is_private])
+    |> validate_required([:name])
+    |> validate_length(:name, min: 3, max: 100)
   end
 end
